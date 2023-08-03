@@ -1,4 +1,4 @@
 .idea
 out*
-go_build_sigen
+go_build*
 sigen

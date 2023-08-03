@@ -138,5 +138,8 @@ func getTemplate(name string) (template *File, err error) {
 		return nil, err
 	}
 
+	if template == nil {
+		return nil, errors.New("template not found")
+	}
 	return
 }
