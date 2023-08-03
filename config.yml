@@ -1,0 +1,33 @@
+templates:
+  repository:
+    name: "repository"
+    type: "directory"
+    sub:
+    - name: "${pkg}_repo.go"
+      type: "file"
+      content: >
+        package repository
+        
+        var (
+            repo *${pkg}Repo
+            once sync.Once
+        )
+    
+        type ${pkg}Repo struct {
+            db *gorm.DB
+        }
+    
+        type ${Pkg}Repo interface {
+        
+        }
+    
+        func New(db *gorm.DB) ${Pkg}Repo {
+            once.Do(func() {
+                repo = &${pkg}Repo{
+                    db: db,
+                }
+            })
+    
+            return repo
+        }
+   
