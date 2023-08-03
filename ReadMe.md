@@ -5,30 +5,38 @@
 
 ### hello world
 ```shell
+git clone https://github.com/sinameshkini/sigen.git
+
+cd sigen
+
 make build
 
-./sigen -t repository _pkg=user _Pkg=User
+./sigen _pkg=user _Pkg=User
+```
+or for create config file in user home directory:
+```shell
+make install
 ```
 
 In the first step, you need to import your templates into the configuration file. In the configuration file, you can define multiple templates, and when using the tool, you can specify your desired template. Additionally, you can assign values to the variables present in the template.
-### Simple
+### Custome template
 ```shell
 sigen -t <template> 
 ```
 
 ### Custom config
 ```shell
-sigen -c <path_to_config.yaml> -t <template> 
+sigen -c <path_to_config.yaml> 
 ```
 
 ### Custom output path
 ```shell
-sigen -t <template> -o <output_path> 
+sigen -o <output_path> 
 ```
 
 ### Assign values to variables
 ```shell
-sigen -t <template> _<var_name>=<value>
+sigen _<var_name>=<value> ...
 ````
 
 ## Configuration

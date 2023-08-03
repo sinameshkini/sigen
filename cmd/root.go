@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/sinameshkini/sigen/template"
+	"os"
 	"strings"
 
 	"github.com/sirupsen/logrus"
@@ -47,7 +48,7 @@ func Execute() error {
 func init() {
 	_ = logrus.New()
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "${HOME}/.sigen/config.yml", "config file (default is $COMMAND_HOME/config.yml)")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $COMMAND_HOME/config.yml)")
 	rootCmd.Flags().StringVarP(&templateName, "template", "t", "repository", "template key on config")
 	rootCmd.Flags().StringVarP(&out, "out", "o", "./out", "output path")
 }
@@ -57,9 +58,14 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		viper.AddConfigPath(".")
-		//viper.SetConfigType("json")
-		// viper.SetConfigName(".cobra")
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			logrus.Errorln(err.Error())
+		}
+
+		configPath := homeDir + "/.sigen/."
+
+		viper.AddConfigPath(configPath)
 	}
 
 	viper.AutomaticEnv()
