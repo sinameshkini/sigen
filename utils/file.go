@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"os"
 )
 
@@ -14,6 +15,7 @@ func Mkdir(path, name string) (dirPath string, err error) {
 	}
 
 	if exist {
+		logrus.Warnf(name, "already exist in", dirPath)
 		return
 	}
 
@@ -33,6 +35,7 @@ func Touch(path, name string) (filePath string, err error) {
 	}
 
 	if exist {
+		logrus.Warnf(name, "already exist in", filePath)
 		return
 	}
 

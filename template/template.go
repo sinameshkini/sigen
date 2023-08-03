@@ -70,6 +70,8 @@ func makeTemplate(template *File, vars map[string]string) (err error) {
 		return errors.New("template is null or empty")
 	}
 
+	logrus.Infoln("creating ", template.Name, "template:\n", fmt.Sprintf("%+v", template))
+
 	switch template.Type {
 	case FSNone:
 		return fmt.Errorf("select file type for %s, file, directory or link ", template.Name)
@@ -108,6 +110,8 @@ func newFile(template *File, vars map[string]string) (filePath string, err error
 
 	template.Content = replaceVars(template.Content, vars)
 
+	logrus.Infoln("writing content to", template.Name, "file")
+
 	if err = utils.WriteToFile(filePath, template.Content); err != nil {
 		return "", err
 	}
@@ -134,6 +138,8 @@ func replaceVars(str string, vars map[string]string) string {
 }
 
 func getTemplate(name string) (template *File, err error) {
+	logrus.Infoln("loading", name, "template from config")
+
 	if err = viper.UnmarshalKey("templates."+name, &template); err != nil {
 		return nil, err
 	}
@@ -141,5 +147,6 @@ func getTemplate(name string) (template *File, err error) {
 	if template == nil {
 		return nil, errors.New("template not found")
 	}
+
 	return
 }
