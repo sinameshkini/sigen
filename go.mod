@@ -1,4 +1,4 @@
-module sigen
+module github.com/sinameshkini/sigen
 
 go 1.20
 

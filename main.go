@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/sinameshkini/sigen/cmd"
 	"github.com/sirupsen/logrus"
-	"sigen/cmd"
 )
 
 func main() {

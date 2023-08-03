@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"sigen/template"
+	"github.com/sinameshkini/sigen/template"
 	"strings"
 
 	"github.com/sirupsen/logrus"

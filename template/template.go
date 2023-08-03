@@ -3,9 +3,9 @@ package template
 import (
 	"errors"
 	"fmt"
+	"github.com/sinameshkini/sigen/utils"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"sigen/utils"
 	"strings"
 )
 
