@@ -8,6 +8,11 @@ templates:
       content: >
         package repository
         
+        import (
+          "gorm.io/gorm"
+          "sync"
+        )
+        
         var (
             repo *${pkg}Repo
             once sync.Once
@@ -18,7 +23,7 @@ templates:
         }
     
         type ${Pkg}Repo interface {
-        
+          // TODO impl methods
         }
     
         func New(db *gorm.DB) ${Pkg}Repo {
