@@ -1,16 +1,24 @@
 # Sigen
 #### A simple code generator for developers. A tool that allows you to create new codes based on your own templates.
 
-## Usage
-
-### hello world
+## Install
+### Method 1: go install
+```shell
+go install github.com/sinameshkini/sigen
+```
+### Method 2: install from source
 ```shell
 git clone https://github.com/sinameshkini/sigen.git
 
 cd sigen
 
 make build
+```
 
+## Usage
+
+### hello world
+```shell
 ./sigen _pkg=user _Pkg=User
 ```
 or for create config file in user home directory:
