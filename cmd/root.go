@@ -13,6 +13,7 @@ import (
 var (
 	templateName string
 	out          string
+	env          string
 	// Used for flags.
 	cfgFile string
 	// userLicense string
@@ -33,7 +34,7 @@ var (
 				}
 			}
 
-			if err := template.Make(templateName, out, variables); err != nil {
+			if err := template.Make(templateName, out, env, variables); err != nil {
 				logrus.Errorln(err)
 			}
 		},
@@ -49,7 +50,8 @@ func init() {
 	_ = logrus.New()
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $COMMAND_HOME/config.yml)")
-	rootCmd.Flags().StringVarP(&templateName, "template", "t", "repository", "template key on config")
+	rootCmd.Flags().StringVarP(&templateName, "template", "t", "", "template key on config")
+	rootCmd.Flags().StringVarP(&env, "env", "e", "", "environment variables file path")
 	rootCmd.Flags().StringVarP(&out, "out", "o", "./out", "output path")
 }
 

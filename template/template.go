@@ -26,12 +26,7 @@ type File struct {
 	Sub     []*File
 }
 
-func Make(template, out string, variables map[string]string) (err error) {
-	var (
-	//dirPath  string
-	//filePath string
-	)
-
+func Make(template, out, env string, variables map[string]string) (err error) {
 	if template == "" {
 		return errors.New("please select template from your config, example: sigen -t/--template <template key>")
 	}
@@ -56,6 +51,20 @@ func Make(template, out string, variables map[string]string) (err error) {
 	}
 
 	tmp.Parent = out
+
+	if env != "" {
+		envs, err := readEnv(env)
+		if err != nil {
+			return err
+		}
+
+		// args has upper priority from env file
+		for k, v := range variables {
+			envs[k] = v
+		}
+
+		variables = envs
+	}
 
 	// make awesome  code from template :)
 	if err = makeTemplate(tmp, variables); err != nil {
@@ -146,6 +155,29 @@ func getTemplate(name string) (template *File, err error) {
 
 	if template == nil {
 		return nil, errors.New("template not found")
+	}
+
+	return
+}
+
+func readEnv(envPath string) (env map[string]string, err error) {
+	env = make(map[string]string)
+
+	content, err := utils.ReadFile(envPath)
+	if err != nil {
+		return nil, err
+	}
+
+	for _, line := range content {
+		if !strings.HasPrefix(line, "_") {
+			continue
+		}
+
+		kv := strings.Split(line, "=")
+
+		if len(kv) == 2 {
+			env[strings.TrimSpace(kv[0])] = strings.TrimSpace(kv[1])
+		}
 	}
 
 	return

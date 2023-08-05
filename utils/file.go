@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"os"
@@ -77,4 +78,22 @@ func Exists(path string) (bool, error) {
 		return false, nil
 	}
 	return false, err
+}
+
+func ReadFile(filePath string) (content []string, err error) {
+	file, err := os.Open(filePath)
+	defer file.Close()
+	if err != nil {
+		return nil, err
+	}
+
+	fileScanner := bufio.NewScanner(file)
+
+	fileScanner.Split(bufio.ScanLines)
+
+	for fileScanner.Scan() {
+		content = append(content, fileScanner.Text())
+	}
+
+	return
 }
